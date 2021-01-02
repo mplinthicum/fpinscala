@@ -63,15 +63,15 @@ class ListSpec extends AnyFlatSpec with Matchers {
 
   // 3.5
   "dropWhile" should "drop numbers less than 3" in {
-    dropWhile(List(0, 1, 2, 3, 4), (a: Int) => a < 3) should be(List(3, 4))
+    dropWhile(List(0, 1, 2, 3, 4))(a => a < 3) should be(List(3, 4))
   }
 
   it should "drop only leading items" in {
-    dropWhile(List(0, 1, 2, 3, 0, 1), (a: Int) => a < 3) should be(List(3, 0, 1))
+    dropWhile(List(0, 1, 2, 3, 0, 1))(a => a < 3) should be(List(3, 0, 1))
   }
 
   it should "clear out a full list" in {
-    dropWhile(List(0, 1, 2, 3, 4), (a: Int) => a < 5) should be(Nil)
+    dropWhile(List(0, 1, 2, 3, 4))(a => a < 5) should be(Nil)
   }
 
   // 3.6
@@ -81,6 +81,38 @@ class ListSpec extends AnyFlatSpec with Matchers {
 
   "init2" should "drop the last item in the list" in {
     init2(List(1, 2, 3, 4)) should be(List(1, 2, 3))
+  }
+
+  "length" should "compute the length of a list" in {
+    len(List(5, 2, 3, 4)) should be(4)
+  }
+
+  it should "return 0 for an empty list" in {
+    len(Nil) should be(0)
+  }
+
+  it should "work for types other than Int" in {
+    len(List("fish", "but", "like", "a", "lot", "of", "them")) should be(7)
+  }
+
+  "foldLeft" should "sum a list" in {
+    foldLeft(List(1, 2, 3, 4, 5), 0)(_ + _) should be(15)
+  }
+
+  it should "return the base case for an empty list" in {
+    foldLeft(Nil: List[Int], 10)(_ + _) should be(10)
+  }
+
+  it should "work on a list of length one" in {
+    foldLeft(List(4), 0)(_ + _) should be(4)
+  }
+
+  "reverse" should "reverse a list" in {
+    reverse(List(1, 2, 3)) should be(List(3, 2, 1))
+  }
+
+  "reverseFold" should "reverse a list" in {
+    reverseFold(List(1, 2, 3)) should be(List(3, 2, 1))
   }
 
 }
