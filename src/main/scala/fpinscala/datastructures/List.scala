@@ -180,4 +180,12 @@ object List {
     case (_, Nil) => Nil
     case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
   }
+
+  // 3.24 hard
+  @annotation.tailrec
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = (sup, sub) match {
+    case _ if len(sup) < len(sub) => false
+    case _ if foldLeft(zipWith(sup, sub)(_ == _), true)(_ && _) => true
+    case (Cons(_, t), s) => hasSubsequence(t, s)
+  }
 }

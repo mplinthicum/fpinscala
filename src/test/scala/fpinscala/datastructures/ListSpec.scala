@@ -174,4 +174,44 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "zipWith" should "combine and add lists" in {
     zipWith(List(1, 2, 3), List(2, 3, 4))(_ + _) should be(List(3, 5, 7))
   }
+
+  "hasSubsequence" should "return true for a subsequence at the beginning of the list" in {
+    hasSubsequence(List(1, 2, 3, 4), List(1, 2)) should be(true)
+  }
+
+  it should "return true for a subsequence in the middle of the list" in {
+    hasSubsequence(List(1, 2, 3, 4), List(2, 3)) should be(true)
+  }
+
+  it should "return true for a subsequence at the end of the list" in {
+    hasSubsequence(List(1, 2, 3, 4), List(3, 4)) should be(true)
+  }
+
+  it should "return false for a subsequence that doesn't exist in the list" in {
+    hasSubsequence(List(1, 2, 3, 4), List(5, 6)) should be(false)
+  }
+
+  it should "return false for a subsequence out of order" in {
+    hasSubsequence(List(1, 2, 3, 4), List(4, 3)) should be(false)
+  }
+
+  it should "return true for a nil subsequence" in {
+    hasSubsequence(List(1, 2, 3), Nil) should be(true)
+  }
+
+  it should "return false for a nil sequence" in {
+    hasSubsequence(Nil, List(1, 2)) should be(false)
+  }
+
+  it should "return true for two nil sequences" in {
+    hasSubsequence(Nil, Nil) should be(true)
+  }
+
+  it should "return false for a larger subsequence" in {
+    hasSubsequence(List(1, 2, 3), List(1, 2, 3, 4, 5)) should be(false)
+  }
+
+  it should "return true for equal sequences" in {
+    hasSubsequence(List(1, 2, 3), List(1, 2, 3)) should be(true)
+  }
 }
