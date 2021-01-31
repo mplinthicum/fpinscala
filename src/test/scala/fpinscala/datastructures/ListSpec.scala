@@ -107,6 +107,10 @@ class ListSpec extends AnyFlatSpec with Matchers {
     foldLeft(List(4), 0)(_ + _) should be(4)
   }
 
+  "foldRight" should "sum a list" in {
+    foldRight(List(1, 2, 3, 4, 5), 0)(_ + _) should be(15)
+  }
+
   "reverse" should "reverse a list" in {
     reverse(List(1, 2, 3)) should be(List(3, 2, 1))
   }
@@ -115,4 +119,59 @@ class ListSpec extends AnyFlatSpec with Matchers {
     reverseFold(List(1, 2, 3)) should be(List(3, 2, 1))
   }
 
+  "foldRightViaFoldLeft" should "sum a list" in {
+    foldRightViaFoldLeft(List(1, 2, 3, 4, 5), 0)(_ + _) should be(15)
+  }
+
+  "foldLeftViaFoldRight" should "sum a list" in {
+    foldLeftViaFoldRight(List(1, 2, 3, 4, 5), 0)(_ + _) should be(15)
+  }
+
+  "appendFoldRight" should "append a list onto the end of another list" in {
+    appendFoldRight(List(1, 2, 3), List(4, 5, 6)) should be(List(1, 2, 3, 4, 5, 6))
+  }
+
+  "appendFoldLeft" should "append a list onto the end of another list" in {
+    appendFoldLeft(List(1, 2, 3), List(4, 5, 6)) should be(List(1, 2, 3, 4, 5, 6))
+  }
+
+  "concatenate" should "combine a list of lists" in {
+    concatenate(List(List(1, 2), List(3, 4), List(5, 6, 7))) should be(List(1, 2, 3, 4, 5, 6, 7))
+  }
+
+  "addOne" should "add one to a list" in {
+    addOne(List(1, 2, 3)) should be(List(2, 3, 4))
+  }
+
+  "doubleToString" should "convert doubles to strings" in {
+    doubleToString(List(1.0, 2.2)) should be(List("1.0", "2.2"))
+  }
+
+  "map" should "convert doubles to string" in {
+    map(List(1.0, 2.2))(_.toString) should be(List("1.0", "2.2"))
+  }
+
+  "filter" should "remove odd numbers from a list" in {
+    filter(List(1, 2, 3, 4, 5))(_ % 2 == 0) should be(List(2, 4))
+  }
+
+  "flatMap" should "repeat each item in a list" in {
+    flatMap(List(1, 2, 3))(i => List(i, i)) should be(List(1, 1, 2, 2, 3, 3))
+  }
+
+  "filterViaFlatMap" should "remove odd numbers from a list" in {
+    filterViaFlatMap(List(1, 2, 3, 4, 5))(_ % 2 == 0) should be(List(2, 4))
+  }
+
+  "addCorrespondingElements" should "combine and add lists" in {
+    addCorrespondingElements(List(1, 2, 3), List(2, 3, 4)) should be(List(3, 5, 7))
+  }
+
+  it should "add to the length of the shortest list" in {
+    addCorrespondingElements(List(1, 2, 3), List(2, 3)) should be(List(3, 5))
+  }
+
+  "zipWith" should "combine and add lists" in {
+    zipWith(List(1, 2, 3), List(2, 3, 4))(_ + _) should be(List(3, 5, 7))
+  }
 }
